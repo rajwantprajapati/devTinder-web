@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signIn } from "./usersThunks";
+import { fetchUser, signIn } from "./usersThunks";
 
-const SIGN_IN_API_STATUS = {
+const API_STATUS = {
   IDLE: "IDLE",
   PENDING: "PENDING",
   SUCCESS: "SUCCESS",
@@ -9,7 +9,7 @@ const SIGN_IN_API_STATUS = {
 };
 
 const INITIAL_STATE = {
-  status: SIGN_IN_API_STATUS.IDLE,
+  status: API_STATUS.IDLE,
   user: null,
   error: null,
 };
@@ -18,28 +18,34 @@ const userSlice = createSlice({
   name: "user",
   initialState: INITIAL_STATE,
   reducers: {
-    // addUser: (_, action) => {
-    //   return action.payload;
+    // addUser: (state, action) => {
+    //   state.user = action.payload.data;
     // },
     removeUser: () => {
       return INITIAL_STATE;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signIn.pending, (state) => {
-      state.status = SIGN_IN_API_STATUS.PENDING;
-    });
-    builder.addCase(signIn.fulfilled, (state, action) => {
-      state.status = SIGN_IN_API_STATUS.SUCCESS;
-      state.user = action.payload.data;
-      state.error = null;
-    });
-    builder.addCase(signIn.rejected, (state, action) => {
-      state.status = SIGN_IN_API_STATUS.FAILED;
-      state.error = action.payload.message || "Unknown error";
-    });
+    [signIn, fetchUser].forEach((thunk) => handleAsyncCases(builder, thunk));
   },
 });
+
+// Helper to handle pending, fulfilled, and rejected
+const handleAsyncCases = (builder, thunk) => {
+  builder
+    .addCase(thunk.pending, (state) => {
+      state.status = API_STATUS.PENDING;
+    })
+    .addCase(thunk.fulfilled, (state, action) => {
+      state.status = API_STATUS.SUCCESS;
+      state.user = action.payload.data;
+      state.error = null;
+    })
+    .addCase(thunk.rejected, (state, action) => {
+      state.status = API_STATUS.FAILED;
+      state.error = action.payload?.message || "Unknown error";
+    });
+};
 
 export const { addUser, removeUser } = userSlice.actions;
 

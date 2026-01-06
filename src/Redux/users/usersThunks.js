@@ -15,3 +15,18 @@ export const signIn = createAsyncThunk(
     }
   },
 );
+
+export const fetchUser = createAsyncThunk(
+  "/profile/view",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/profile/view");
+
+      return response.data;
+    } catch (error) {
+      console.log("Error in thunk: ", error.message);
+
+      return rejectWithValue({ message: error.message, status: error.status });
+    }
+  },
+);
