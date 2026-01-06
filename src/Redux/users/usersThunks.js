@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../Configuration/axios";
+import { removeUser } from "./userSlice";
 
 export const signIn = createAsyncThunk(
   "/signin",
@@ -23,6 +24,21 @@ export const fetchUser = createAsyncThunk(
       const response = await axiosInstance.get("/profile/view");
 
       return response.data;
+    } catch (error) {
+      console.log("Error in thunk: ", error.message);
+
+      return rejectWithValue({ message: error.message, status: error.status });
+    }
+  },
+);
+
+export const signOut = createAsyncThunk(
+  "/signout",
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      await axiosInstance.post("/signout");
+
+      dispatch(removeUser());
     } catch (error) {
       console.log("Error in thunk: ", error.message);
 

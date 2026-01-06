@@ -1,13 +1,31 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
 import {
   selectUserFirstName,
   selectUserPhotoUrl,
 } from "../Redux/users/usersSelectors";
+import { signOut } from "../Redux/users/usersThunks";
 
 const NavBar = () => {
   const userFirstName = useSelector(selectUserFirstName);
   const userPhotoUrl = useSelector(selectUserPhotoUrl);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  /**
+   * Method to handle logout click
+   */
+  const handleLogout = async () => {
+    try {
+      await dispatch(signOut()).unwrap;
+
+      navigate("/login");
+    } catch (error) {
+      console.log("Error recieved in component: ", error);
+      navigate("/error");
+    }
+  };
 
   return (
     <div className="navbar bg-base-300 shadow-sm">
@@ -43,7 +61,7 @@ const NavBar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
           </div>

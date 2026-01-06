@@ -7,6 +7,7 @@ import appStore from "./Redux/appStore";
 const Login = lazy(() => import("./Pages/Login/Login"));
 const Feed = lazy(() => import("./Pages/Feed/Feed"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
+const Error = lazy(() => import("./Pages/Error/Error"));
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="/error" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </Provider>

@@ -26,8 +26,10 @@ const Home = () => {
       // If token is not present in cookie, then api will fail with 401 status code.
       // Redirect to login page in this case.
       if (error.status === 401) {
-        navigate("/login");
+        return navigate("/login");
       }
+
+      navigate("/error");
     }
   }, [user, dispatch, navigate]);
 
