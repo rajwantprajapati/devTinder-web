@@ -7,6 +7,7 @@ import { signIn } from "../../Redux/users/usersThunks";
 const Login = () => {
   const [emailId, setEmailId] = useState("rajwant@gmail.com");
   const [password, setPassword] = useState("Rajwant@123");
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,11 +17,13 @@ const Login = () => {
    */
   const handleSignIn = async () => {
     try {
+      setError("");
       await dispatch(signIn({ emailId, password })).unwrap();
 
       navigate("/");
     } catch (error) {
       console.log("Error handled in component: ", error);
+      setError(error.message);
     }
 
     // try {
@@ -64,6 +67,8 @@ const Login = () => {
             />
           </fieldset>
         </div>
+
+        <p className="text-error">{error}</p>
 
         <div className="card-actions justify-end mt-5">
           <button className="btn btn-primary" onClick={handleSignIn}>

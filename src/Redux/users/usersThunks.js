@@ -10,9 +10,12 @@ export const signIn = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log("Error in thunk: ", error.message);
+      console.log("Error in thunk: ", error.response.data.error);
 
-      return rejectWithValue({ message: error.message, status: error.status });
+      return rejectWithValue({
+        message: error.response.data.error.message,
+        status: error.status,
+      });
     }
   },
 );
@@ -25,9 +28,12 @@ export const fetchUser = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log("Error in thunk: ", error.message);
+      console.log("Error in thunk: ", error.response.data.message);
 
-      return rejectWithValue({ message: error.message, status: error.status });
+      return rejectWithValue({
+        message: error.response.data.error,
+        status: error.status,
+      });
     }
   },
 );
