@@ -4,12 +4,14 @@ import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../Redux/users/usersThunks";
-import { selectUser } from "../../Redux/users/usersSelectors";
+import { selectApiStatus, selectUser } from "../../Redux/users/usersSelectors";
+import { API_STATUS } from "../../Redux/users/userSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  const apiStatus = useSelector(selectApiStatus);
 
   /**
    * Method to fetch user data on page refresh
@@ -36,6 +38,16 @@ const Home = () => {
   useEffect(() => {
     fetchUserProfile();
   }, []);
+
+  console.log("apiStatus: ", apiStatus);
+
+  if (apiStatus === API_STATUS.PENDING || apiStatus === API_STATUS.IDLE) {
+    return (
+      <div className="flex justify-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <>

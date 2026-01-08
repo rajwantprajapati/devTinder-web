@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-export const selectSignInApiStatus = (state) => state.user.status;
+export const selectApiStatus = (state) => state.user.status;
 export const selectUser = (state) => state.user.user;
 export const selectUserError = (state) => state.user.error;
 

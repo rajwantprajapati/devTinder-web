@@ -1,5 +1,11 @@
+import { useSelector } from "react-redux";
+import EditProfileForm from "./Components/EditProfileForm";
+import { selectUser } from "../../Redux/users/usersSelectors";
+
 const Profile = () => {
-  return <h2>This is profile</h2>;
+  const user = useSelector(selectUser);
+
+  return <EditProfileForm user={user} />;
 };
 
 export default Profile;

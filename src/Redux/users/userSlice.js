@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchUser, signIn } from "./usersThunks";
 
-const API_STATUS = {
+export const API_STATUS = {
   IDLE: "IDLE",
   PENDING: "PENDING",
   SUCCESS: "SUCCESS",
