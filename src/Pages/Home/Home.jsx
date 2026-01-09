@@ -1,17 +1,16 @@
 import { Outlet, useNavigate } from "react-router";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../Redux/users/usersThunks";
-import { selectApiStatus, selectUser } from "../../Redux/users/usersSelectors";
-import { API_STATUS } from "../../Redux/users/userSlice";
+import { selectUser } from "../../Redux/users/usersSelectors";
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const apiStatus = useSelector(selectApiStatus);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * Method to fetch user data on page refresh
@@ -21,6 +20,7 @@ const Home = () => {
     if (user) return;
 
     try {
+      setIsLoading(true);
       await dispatch(fetchUser()).unwrap();
     } catch (error) {
       console.log("Error recieved in component: ", error);
@@ -32,6 +32,8 @@ const Home = () => {
       }
 
       navigate("/error");
+    } finally {
+      setIsLoading(false);
     }
   }, [user, dispatch, navigate]);
 
@@ -39,9 +41,9 @@ const Home = () => {
     fetchUserProfile();
   }, []);
 
-  console.log("apiStatus: ", apiStatus);
+  // console.log("apiStatus in Home: ", apiStatus);
 
-  if (apiStatus === API_STATUS.PENDING || apiStatus === API_STATUS.IDLE) {
+  if (isLoading) {
     return (
       <div className="flex justify-center h-screen">
         <span className="loading loading-spinner loading-lg"></span>

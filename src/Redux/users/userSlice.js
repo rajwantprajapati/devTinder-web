@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUser, signIn } from "./usersThunks";
+import { editProfile, fetchUser, signIn } from "./usersThunks";
 
 export const API_STATUS = {
   IDLE: "IDLE",
@@ -26,7 +26,9 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    [signIn, fetchUser].forEach((thunk) => handleAsyncCases(builder, thunk));
+    [signIn, fetchUser, editProfile].forEach((thunk) =>
+      handleAsyncCases(builder, thunk),
+    );
   },
 });
 

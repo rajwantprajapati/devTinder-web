@@ -38,6 +38,24 @@ export const fetchUser = createAsyncThunk(
   },
 );
 
+export const editProfile = createAsyncThunk(
+  "/profile/edit",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch("/profile/edit", payload);
+
+      return response.data;
+    } catch (error) {
+      console.log("Error in thunk: ", error.response.data.error);
+
+      return rejectWithValue({
+        message: error.response.data.error.message,
+        status: error.status,
+      });
+    }
+  },
+);
+
 export const signOut = createAsyncThunk(
   "/signout",
   async (_, { rejectWithValue, dispatch }) => {
