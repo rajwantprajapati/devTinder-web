@@ -8,6 +8,8 @@ const Login = lazy(() => import("./Pages/Login/Login"));
 const Feed = lazy(() => import("./Pages/Feed/Feed"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
 const Error = lazy(() => import("./Pages/Error/Error"));
+const Connections = lazy(() => import("./Pages/Connections/Connections"));
+const Requests = lazy(() => import("./Pages/Requests/Requests"));
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/" element={<Feed />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/connections" element={<Connections />} />
+            <Route path="/requests" element={<Requests />} />
           </Route>
           <Route path="/error" element={<Error />} />
         </Routes>
