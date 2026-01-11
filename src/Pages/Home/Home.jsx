@@ -5,6 +5,7 @@ import Footer from "../../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../Redux/users/usersThunks";
 import { selectUser } from "../../Redux/users/usersSelectors";
+import Loader from "../../Components/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -44,11 +45,7 @@ const Home = () => {
   // console.log("apiStatus in Home: ", apiStatus);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (

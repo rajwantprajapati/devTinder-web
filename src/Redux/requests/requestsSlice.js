@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRequests } from "./requestsThunk";
+import { fetchRequests, reviewRequest } from "./requestsThunk";
 
 const requestsSlice = createSlice({
   name: "requests",
@@ -7,9 +7,17 @@ const requestsSlice = createSlice({
     requests: null,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchRequests.fulfilled, (state, { payload }) => {
-      state.requests = payload.data;
-    });
+    builder
+      .addCase(fetchRequests.fulfilled, (state, { payload }) => {
+        state.requests = payload.data;
+      })
+      .addCase(reviewRequest.fulfilled, (state, { payload }) => {
+        const updatedRequests = state.requests?.filter(
+          (request) => request._id !== payload.data._id,
+        );
+
+        state.requests = updatedRequests;
+      });
   },
 });
 

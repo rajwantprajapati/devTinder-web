@@ -16,3 +16,21 @@ export const fetchRequests = createAsyncThunk(
     }
   },
 );
+
+export const reviewRequest = createAsyncThunk(
+  "/request/review",
+  async ({ status, requestId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/request/review/${status}/${requestId}`,
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status,
+      });
+    }
+  },
+);
