@@ -26,9 +26,7 @@ const Connections = () => {
     getConnections();
   }, []);
 
-  console.log("connections: ", connections);
-
-  if (connections?.length === 0) {
+  if (!connections || connections?.length === 0) {
     return <h1>No connection found!</h1>;
   }
 
