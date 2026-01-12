@@ -7,6 +7,12 @@ const feedSlice = createSlice({
     feeds: null,
     error: null,
   },
+  reducers: {
+    removeUserFromFeed: (state, { payload }) => {
+      console.log("payload in removeUserFromFeed: ", payload);
+      state.feeds = state.feeds.filter((feed) => feed._id !== payload._id);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchFeed.fulfilled, (state, { payload }) => {
       state.feeds = payload.data;
@@ -17,6 +23,8 @@ const feedSlice = createSlice({
     });
   },
 });
+
+export const { removeUserFromFeed } = feedSlice.actions;
 
 export const selectFeeds = (state) => state.feed.feeds;
 
