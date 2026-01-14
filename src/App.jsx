@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import Home from "./Pages/Home/Home";
 import appStore from "./Redux/appStore";
 
-const Login = lazy(() => import("./Pages/Login/Login"));
+const Auth = lazy(() => import("./Pages/Auth/Auth"));
 const Feed = lazy(() => import("./Pages/Feed/Feed"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
 const Error = lazy(() => import("./Pages/Error/Error"));
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}>
             <Route path="/" element={<Feed />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/requests" element={<Requests />} />

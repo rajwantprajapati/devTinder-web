@@ -20,6 +20,24 @@ export const signIn = createAsyncThunk(
   },
 );
 
+export const signUp = createAsyncThunk(
+  "/signup",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/signup", payload);
+
+      return response.data;
+    } catch (error) {
+      console.log("Error in thunk: ", error.response.data.error);
+
+      return rejectWithValue({
+        message: error.response.data.error.message,
+        status: error.status,
+      });
+    }
+  },
+);
+
 export const fetchUser = createAsyncThunk(
   "/profile/view",
   async (payload, { rejectWithValue }) => {
